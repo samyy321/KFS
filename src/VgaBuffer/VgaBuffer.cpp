@@ -43,8 +43,7 @@ namespace	VgaBuffer
 					NEWLINE(VgaBuffer::current_xpos, VgaBuffer::current_ypos)
 				} else {
 					if (VgaBuffer::current_xpos >= WIDTH) {
-						VgaBuffer::current_xpos = 0;
-						VgaBuffer::current_ypos++;
+						NEWLINE(VgaBuffer::current_xpos, VgaBuffer::current_ypos)
 					}
 					putchar(c);
 				}
