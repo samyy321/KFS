@@ -41,6 +41,7 @@ install: $(EXEC)
 
 clean:
 	@/bin/rm -rf $(OBJ_PATH)
+	make -C $(SRC_PATH)/VgaBuffer clean
 	@echo "Objects removed."
 
 fclean: clean
