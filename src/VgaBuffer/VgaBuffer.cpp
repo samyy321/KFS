@@ -3,28 +3,39 @@
 namespace	VgaBuffer
 {
 	unsigned short	*base = (unsigned short *)0xb8000;
-	unsigned int	current_ypos;
-	unsigned int	current_xpos;
+	unsigned int	currentY;
+	unsigned int	currentX;
 
 	void	scroll(void)
 	{
 		int i, j;
 
-		for(i = 0; i < HEIGHT; i++) {
+		for (i = 0; i < HEIGHT; i++) {
 			for (j = 0; j < WIDTH; j++) {
 				VgaBuffer::base[i * WIDTH + j] = VgaBuffer::base[(i + 1) * WIDTH + j];
 			}
 		}
-		VgaBuffer::current_ypos = HEIGHT - 1;
+		VgaBuffer::currentY = HEIGHT - 1;
 	}
 
-	void	putchar(char c)
+	void	updateCursor(unsigned short pos)
 	{
-		int	current_pos;
+		writePort(0x3D4, 0x0F);
+		writePort(0x3D5, (unsigned char) (pos & 0xFF));
+		writePort(0x3D4, 0x0E);
+		writePort(0x3D5, (unsigned char) ((pos >> 8) & 0xFF));
+	}
 
-		current_pos = VgaBuffer::current_ypos * WIDTH + VgaBuffer::current_xpos;
-		VgaBuffer::base[current_pos] = (VgaBuffer::base[current_pos] & 0xFF00) | c;
-		VgaBuffer::current_xpos++;
+	void	clear(void)
+	{
+		unsigned int i;
+
+		VgaBuffer::currentX = 0;
+		VgaBuffer::currentY = 0;
+		for (i = 0; i < HEIGHT * WIDTH; i++) {
+			PUTC(' ', VgaBuffer::base[i]);
+			PUT_BCOLOR(BLACK, VgaBuffer::base[i]);
+		}
 	}
 
 	void	putstr(char *str)
@@ -32,21 +43,60 @@ namespace	VgaBuffer
 		char	c;
 
 		while ((c = *str++) != '\0') {
-			if (VgaBuffer::current_ypos >= HEIGHT)
+			if (VgaBuffer::currentY >= HEIGHT)
 				scroll();
 			if (c == '\b') {
-				BACKSPACE(VgaBuffer::current_xpos)
+				BACKSPACE(VgaBuffer::currentX)
 			} else if (c == '\r') {
-				CARRIAGE_RET(VgaBuffer::current_xpos)
-			} else
-				if (c == '\n') {
-					NEWLINE(VgaBuffer::current_xpos, VgaBuffer::current_ypos)
-				} else {
-					if (VgaBuffer::current_xpos >= WIDTH) {
-						NEWLINE(VgaBuffer::current_xpos, VgaBuffer::current_ypos)
-					}
-					putchar(c);
+				CARRIAGE_RET(VgaBuffer::currentX)
+			} else if (c == '\n') {
+				NEWLINE(VgaBuffer::currentX, VgaBuffer::currentY)
+			} else {
+				if (VgaBuffer::currentX >= WIDTH) {
+					NEWLINE(VgaBuffer::currentX, VgaBuffer::currentY)
+				} if (c == '\t')
+					TAB(VgaBuffer::currentX, VgaBuffer::currentY)
+				else {
+					PUTC(c, VgaBuffer::base[CURRENT_IDX(VgaBuffer::currentX,
+														VgaBuffer::currentY)]);
+					VgaBuffer::currentX++;
 				}
+			}
 		}
+		updateCursor(CURRENT_IDX(VgaBuffer::currentX, VgaBuffer::currentY));
+	}
+
+	void	putstrColor(char *str, int8_t backColor, int8_t frontColor)
+	{
+		char	c;
+
+		while ((c = *str++) != '\0') {
+			if (VgaBuffer::currentY >= HEIGHT)
+				scroll();
+			if (c == '\b') {
+				BACKSPACE(VgaBuffer::currentX)
+			} else if (c == '\r') {
+				CARRIAGE_RET(VgaBuffer::currentX)
+			} else if (c == '\n') {
+				NEWLINE(VgaBuffer::currentX, VgaBuffer::currentY)
+			} else {
+				if (VgaBuffer::currentX >= WIDTH) {
+					NEWLINE(VgaBuffer::currentX, VgaBuffer::currentY)
+				} if (c == '\t')
+					TAB(VgaBuffer::currentX, VgaBuffer::currentY)
+				else {
+					PUTC(c, VgaBuffer::base[CURRENT_IDX(VgaBuffer::currentX,
+														VgaBuffer::currentY)]);
+					PUT_BCOLOR(backColor,
+						 		VgaBuffer::base[CURRENT_IDX(VgaBuffer::currentX,
+														VgaBuffer::currentY)]);
+					PUT_FCOLOR(frontColor,
+								VgaBuffer::base[CURRENT_IDX(VgaBuffer::currentX,
+														VgaBuffer::currentY)]);
+					VgaBuffer::currentX++;
+				}
+			}
+		}
+		updateCursor(CURRENT_IDX(VgaBuffer::currentX, VgaBuffer::currentY));
 	}
 }
