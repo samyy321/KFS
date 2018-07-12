@@ -48,8 +48,8 @@ namespace	VgaBuffer
 	extern unsigned int		currentY;
 	extern unsigned int		currentX;
 
-	void	putstr(char *str);
-	void	putstrColor(char *str, int8_t backColor, int8_t frontColor);
+	void	putstr(const char *str);
+	void	putstrColor(const char *str, int8_t backColor, int8_t frontColor);
 	void	scroll(void);
 	void	clear(void);
 	void	updateCursor(unsigned short pos);

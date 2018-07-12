@@ -38,7 +38,7 @@ namespace	VgaBuffer
 		}
 	}
 
-	void	putstr(char *str)
+	void	putstr(const char *str)
 	{
 		char	c;
 
@@ -66,7 +66,7 @@ namespace	VgaBuffer
 		updateCursor(CURRENT_IDX(VgaBuffer::currentX, VgaBuffer::currentY));
 	}
 
-	void	putstrColor(char *str, int8_t backColor, int8_t frontColor)
+	void	putstrColor(const char *str, int8_t backColor, int8_t frontColor)
 	{
 		char	c;
 
