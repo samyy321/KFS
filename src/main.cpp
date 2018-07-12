@@ -1,4 +1,5 @@
 #include "VgaBuffer.h"
+#include "multiboot.h"
 
 extern "C"
 void	kmain(void)
@@ -9,6 +10,9 @@ void	kmain(void)
 	char *str = "qsdf\nqsdf\n\b";
 	// char *str = "\n\n\b";
 
+extern "C"
+void	kmain(t_multiboot *mboot_ptr)
+{
 	VgaBuffer::clear();
 	VgaBuffer::putstr(str);
 	// VgaBuffer::putstrColor(str, WHITE, RED);
