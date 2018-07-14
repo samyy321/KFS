@@ -19,6 +19,8 @@ ASM_OBJ_NAME = $(ASM_SRC_NAME:.s=.o)
 ASM_OBJ = $(addprefix $(OBJ_PATH), $(ASM_OBJ_NAME))
 
 EXEC = kernelito.bin
+GRUB_CFG = grub.cfg
+ISO = kernelito.iso
 
 all: $(EXEC)
 
@@ -37,16 +39,25 @@ $(OBJ_PATH)%.o: $(SRC_PATH)%.s
 
 install: $(EXEC)
 	@echo "Install $(EXEC)..."
-	@/bin/cp $(EXEC) /boot
+	@mkdir -p imgfiles/boot/grub/
+	@/bin/cp $(GRUB_CFG) imgfiles/boot/grub/
+	@/bin/cp $(EXEC) imgfiles/boot/
+	@grub-mkrescue -o $(ISO) imgfiles
+	@/bin/rm -rf imgfiles
+
+run: $(ISO)
+	@qemu-system-i386 -cdrom $(ISO)
 
 clean:
 	@/bin/rm -rf $(OBJ_PATH)
-	make -C $(SRC_PATH)/VgaBuffer clean
+	@make -C $(SRC_PATH)/VgaBuffer clean
 	@echo "Objects removed."
 
 fclean: clean
 	@/bin/rm -f $(EXEC)
 	@echo "$(EXEC) removed."
+	@/bin/rm -f $(ISO)
+	@echo "$(ISO) removed."
 
 re: fclean all
 

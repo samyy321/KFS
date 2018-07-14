@@ -9,7 +9,7 @@ void	printSplash(void)
 	VgaBuffer::putstr("De l'or tu dis ?\n");
 	for (i = 0; i < HEIGHT - 1; ++i)
 	{
-		for (j = 0; j < 10000000; ++j){}
+		for (j = 0; j < 1000000; ++j){}
 		VgaBuffer::putstr(".\n");
 	}
 	VgaBuffer::putstrColor("Flemme sur lit de pistache.", LIGHT_GREEN, RED);
