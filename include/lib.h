@@ -5,7 +5,7 @@
 
 namespace	MemLib
 {
-	void		*memcpy(void *dst, const void *src, uint32_t n);
+	void	*memcpy(void *dst, const void *src, uint32_t n);
 }
 
 #endif

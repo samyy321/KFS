@@ -7,8 +7,8 @@ LD_PARAMS = -m elf_i386
 
 SRC_PATH = src/
 
-SRC_NAME = main.cpp VgaBuffer.cpp MemLib.cpp
-ASM_SRC_NAME = loader.s
+SRC_NAME = main.cpp VgaBuffer.cpp GlobalDescriptorTable.cpp MemLib.cpp
+ASM_SRC_NAME = loader.s portIO.s
 
 OBJ_PATH = obj/
 
@@ -33,6 +33,7 @@ $(OBJ_PATH)%.o: $(SRC_PATH)%.cpp
 	@mkdir -p $(OBJ_PATH)
 	@make -C lib/ install
 	@make -C $(SRC_PATH)/VgaBuffer install
+	@make -C $(SRC_PATH)/GlobalDescriptorTable install
 	@$(CXX) $(CXXFLAGS) -I include -c $^ -o $@
 
 $(OBJ_PATH)%.o: $(SRC_PATH)%.s
@@ -53,6 +54,7 @@ clean:
 	@/bin/rm -rf $(OBJ_PATH)
 	@make -C $(SRC_PATH)/VgaBuffer clean
 	@make -C lib/ clean
+	@make -C $(SRC_PATH)/GlobalDescriptorTable clean
 	@echo "Objects removed."
 
 fclean: clean
