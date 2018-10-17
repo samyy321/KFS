@@ -2,11 +2,13 @@
 %define FLAGS		0x00
 %define CHECKSUM	-(MAGIC + FLAGS)
 
+section .multiboot
+align	4
+dd		MAGIC
+dd		FLAGS
+dd		CHECKSUM
+
 section .text
-	align	4
-	dd		MAGIC
-	dd		FLAGS
-	dd		CHECKSUM
 
 global loader
 extern kmain
@@ -20,5 +22,5 @@ stop:
 
 section .bss
 
-resb		8192
+resb		2*1024*1024
 kernel_stack:
