@@ -51,9 +51,11 @@ namespace	VgaBuffer
 				CARRIAGE_RET(VgaBuffer::currentX)
 			} else if (c == '\n') {
 				NEWLINE(VgaBuffer::currentX, VgaBuffer::currentY)
+				scroll();
 			} else {
 				if (VgaBuffer::currentX >= WIDTH) {
 					NEWLINE(VgaBuffer::currentX, VgaBuffer::currentY)
+					scroll();
 				} if (c == '\t')
 					TAB(VgaBuffer::currentX, VgaBuffer::currentY)
 				else {
@@ -79,9 +81,11 @@ namespace	VgaBuffer
 				CARRIAGE_RET(VgaBuffer::currentX)
 			} else if (c == '\n') {
 				NEWLINE(VgaBuffer::currentX, VgaBuffer::currentY)
+				scroll();
 			} else {
 				if (VgaBuffer::currentX >= WIDTH) {
 					NEWLINE(VgaBuffer::currentX, VgaBuffer::currentY)
+					scroll();
 				} if (c == '\t')
 					TAB(VgaBuffer::currentX, VgaBuffer::currentY)
 				else {

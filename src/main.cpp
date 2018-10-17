@@ -1,5 +1,8 @@
 #include "VgaBuffer.h"
 #include "multiboot.h"
+#include "GlobalDescriptorTable.h"
+#include "InterruptsManager.h"
+#include "KbdHandler.h"
 
 void	printSplash(void)
 {
@@ -20,5 +23,8 @@ void	kmain(t_multiboot *mboot_ptr)
 {
 	VgaBuffer::clear();
 	printSplash();
+
+	GlobalDescriptorTable gdt;
+	InterruptsManager interruptsManager(&gdt);
 	return;
 }
