@@ -18,6 +18,21 @@ namespace	VgaBuffer
 		VgaBuffer::currentY = HEIGHT - 1;
 	}
 
+	// Cursor registers: http://web.stanford.edu/class/cs140/projects/pintos/specs/freevga/vga/crtcreg.htm
+	// https://wiki.osdev.org/Text_Mode_Cursor
+	// Set the CRTC adress register to cursor start/end and set only
+	// the Cursor Scan Line Start/End bits in the data registers
+	void enableCursor(uint8_t cursorStart, uint8_t cursorEnd)
+	{
+		writePort(0x3D4, 0x0A);
+		writePort(0x3D5, (readPort(0x3D5) & 0xC0) | cursorStart);
+
+		writePort(0x3D4, 0x0B);
+		writePort(0x3D5, (readPort(0x3D5) & 0xE0) | cursorEnd);
+	}
+
+	// Set the CRTC adress register to cursor location low/high
+	// and set the new location in the data registers
 	void	updateCursor(unsigned short pos)
 	{
 		writePort(0x3D4, 0x0F);

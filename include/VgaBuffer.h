@@ -53,6 +53,7 @@ namespace	VgaBuffer
 	void	scroll(void);
 	void	clear(void);
 	void	updateCursor(unsigned short pos);
+	void 	enableCursor(uint8_t cursorStart, uint8_t cursorEnd);
 }
 
 #endif
