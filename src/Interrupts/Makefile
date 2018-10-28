@@ -2,7 +2,7 @@ ASM = nasm
 ASM_FLAGS = -f elf32
 CXX = g++
 CXXFLAGS = -m32 -fno-builtin -fno-exceptions -fno-stack-protector -fno-rtti \
-			-nostdlib -nodefaultlibs -fno-leading-underscore
+			-nostdlib -nodefaultlibs -fno-leading-underscore -std=c++11
 SRC_NAME = InterruptsManager.cpp
 
 ASM_SRC_NAME = interrupts.s
