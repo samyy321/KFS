@@ -20,10 +20,23 @@ String& String::operator=(const char* right)
 		content[i] = right[i];
 		++i;
 	}
+	content[i] = '\0';
 	size = --i;
 }
 
-bool String::operator==(String const& right)
+String& String::operator=(const String& right)
+{
+	int i = 0;
+	while (right[i] != '\0')
+	{
+		content[i] = right[i];
+		++i;
+	}
+	content[i] = '\0';
+	size = --i;
+}
+
+bool String::operator==(const String& right)
 {
 	int i = 0;
 	while (content[i] && content[i] == right[i])

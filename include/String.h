@@ -11,7 +11,7 @@ private:
 
 public:
 	String(char *str);
-	String(String &str);
+	String(String& str);
 	String();
 
 	uint32_t getSize() const
@@ -25,7 +25,8 @@ public:
 	}
 
 	String& operator=(const char* right);
-	bool operator==(String const& right);
+	String& operator=(const String& right);
+	bool operator==(const String& right);
 	bool operator==(const char *right);
 };
 
