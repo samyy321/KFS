@@ -1,7 +1,7 @@
 CXX = g++
 CXXFLAGS = -m32 -fno-builtin -fno-exceptions -fno-stack-protector -fno-rtti \
 			-nostdlib -nodefaultlibs -fno-leading-underscore
-SRC_NAME = MemLib.cpp
+SRC_NAME = MemLib.cpp String.cpp
 INCLUDE_PATH = ../include
 OBJ_PATH = obj/
 KOBJ_PATH = ../obj

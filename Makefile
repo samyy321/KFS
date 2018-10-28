@@ -7,7 +7,7 @@ LD_PARAMS = -m elf_i386
 
 SRC_PATH = src/
 
-SRC_NAME = main.cpp VgaBuffer.cpp GlobalDescriptorTable.cpp MemLib.cpp InterruptsManager.cpp KbdHandler.cpp
+SRC_NAME = main.cpp VgaBuffer.cpp GlobalDescriptorTable.cpp MemLib.cpp InterruptsManager.cpp KbdHandler.cpp String.cpp
 ASM_SRC_NAME = loader.s portIO.s interrupts.s
 
 OBJ_PATH = obj/
