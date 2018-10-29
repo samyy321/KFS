@@ -50,6 +50,7 @@ namespace	VgaBuffer
 
 	void	putstr(const char *str);
 	void	putstrColor(const char *str, int8_t backColor, int8_t frontColor);
+	void	eraseChar(uint8_t minX);
 	void	scroll(void);
 	void	clear(void);
 	void	updateCursor(unsigned short pos);

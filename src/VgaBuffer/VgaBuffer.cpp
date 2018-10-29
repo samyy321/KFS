@@ -53,6 +53,23 @@ namespace	VgaBuffer
 		}
 	}
 
+	void	eraseChar(uint8_t minX)
+	{
+		if (VgaBuffer::currentX == 0)
+		{
+			VgaBuffer::currentX = WIDTH - 1;
+			VgaBuffer::currentY--;
+		}
+		else
+		{
+			VgaBuffer::currentX--;
+		}
+
+		updateCursor(CURRENT_IDX(VgaBuffer::currentX, VgaBuffer::currentY));
+		PUTC(' ', VgaBuffer::base[CURRENT_IDX(VgaBuffer::currentX,
+											VgaBuffer::currentY)]);
+	}
+
 	void	putstr(const char *str)
 	{
 		char	c;

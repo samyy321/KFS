@@ -34,7 +34,7 @@ void KbdHandler::Keystroke::setAsciiVal()
 {
 	switch (keycode) {
 	case BS_CODE :
-		asciiVal = 127;
+		asciiVal = 8;
 		break;
 	case HT_CODE :
 		asciiVal = 9;
