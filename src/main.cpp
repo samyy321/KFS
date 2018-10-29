@@ -3,6 +3,8 @@
 #include "GlobalDescriptorTable.h"
 #include "InterruptsManager.h"
 #include "KbdHandler.h"
+#include "Shell.h"
+#include "DisplayablesManager.h"
 
 void	printSplash(void)
 {
@@ -23,8 +25,25 @@ void	kmain(t_multiboot *mboot_ptr)
 {
 	VgaBuffer::clear();
 	printSplash();
+	VgaBuffer::enableCursor(0, 15);
 
 	GlobalDescriptorTable gdt;
 	InterruptsManager interruptsManager(&gdt);
+
+	DisplayablesManager displayablesManager;
+
+	// Shell commands
+	String reboot("reboot");
+
+	Shell basicShell;
+	basicShell.addCommand(&reboot);
+
+	displayablesManager.addDisplayable(&basicShell);
+	KbdHandler kbd(&interruptsManager, &displayablesManager);
+
+	interruptsManager.initIdt();
+
+	basicShell.start();
+
 	return;
 }
