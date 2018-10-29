@@ -1,13 +1,15 @@
 #ifndef STRING_H
 #define STRING_H
 
+#define MAX_CONTENT 64
+
 #include "types.h"
 
 class String
 {
 private:
 	uint32_t size;
-	char content[64]; //TODO: handle resize after implementing memory management
+	char content[MAX_CONTENT]; //TODO: handle resize after implementing memory management
 
 public:
 	String(char *str);

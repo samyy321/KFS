@@ -15,7 +15,7 @@ String::String(char *str)
 String& String::operator=(const char* right)
 {
 	int i = 0;
-	while (right[i] != '\0')
+	while (right[i] != '\0' && i < MAX_CONTENT - 1)
 	{
 		content[i] = right[i];
 		++i;
@@ -27,7 +27,7 @@ String& String::operator=(const char* right)
 String& String::operator=(const String& right)
 {
 	int i = 0;
-	while (right[i] != '\0')
+	while (right[i] != '\0' && i < MAX_CONTENT - 1)
 	{
 		content[i] = right[i];
 		++i;
