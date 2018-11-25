@@ -17,9 +17,19 @@ public:
 	void addCommand(String *cmd);
 	void printStroke(char strokeValue);
 
+	struct	Cmd
+	{
+		String name;
+		String args;
+		uint16_t nameLen;
+		uint8_t argsCount;
+	};
+
 private:
 	String *commands[NB_CMD];
 	void parseBuffer() override;
+	void getCmdName(Cmd& cmd);
+	void getArgs(Cmd& cmd);
 	bool isKnownCmd(const String& cmd);
-	bool execCmd(String& cmd);
+	bool execCmd(Cmd& currentCmd);
 };

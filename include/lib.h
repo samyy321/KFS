@@ -8,4 +8,10 @@ namespace	MemLib
 	void	*memcpy(void *dst, const void *src, uint32_t n);
 }
 
+namespace Utils
+{
+	bool isSimpleSpace(char c);
+	bool isSpace(char c);
+}
+
 #endif

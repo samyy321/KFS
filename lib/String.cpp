@@ -6,7 +6,7 @@ String::String()
 
 }
 
-String::String(char *str)
+String::String(const char *str)
 {
 	*this = str;
 }

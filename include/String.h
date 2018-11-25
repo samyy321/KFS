@@ -12,8 +12,8 @@ private:
 	char content[MAX_CONTENT]; //TODO: handle resize after implementing memory management
 
 public:
-	String(char *str);
-	String(String& str);
+	String(const char *str);
+	String(const String& str);
 	String();
 
 	uint32_t getSize() const
@@ -23,6 +23,24 @@ public:
 
 	char operator[](int idx) const
 	{
+		//TODO: implement assert
+		if (idx < 0 || idx >= MAX_CONTENT)
+		{
+				VgaBuffer::putstr("Out of string buffer!");
+				return content[0];
+		}
+		return content[idx];
+	}
+
+	// This overload is used for assignement
+	char& operator[](int idx)
+	{
+		//TODO: implement assert
+		if (idx < 0 || idx >= MAX_CONTENT)
+		{
+				VgaBuffer::putstr("Out of string buffer!");
+				return content[0];
+		}
 		return content[idx];
 	}
 

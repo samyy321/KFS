@@ -94,9 +94,57 @@ bool Shell::isKnownCmd(const String& cmd)
 	return false;
 }
 
-bool Shell::execCmd(String& cmd)
+void	Shell::getCmdName(Shell::Cmd& cmd)
 {
-	if (cmd == REBOOT)
+	uint16_t len;
+
+	for (len = 0; buffer[len] != '\0' && !Utils::isSpace(buffer[len]); ++len)
+		cmd.name[len] = buffer[len];
+
+	//TODO: implement this in String class to avoid the '\0' C-like coding style?
+	cmd.name[len] = '\0';
+	cmd.nameLen = len;
+}
+
+void Shell::getArgs(Shell::Cmd& cmd)
+{
+	uint16_t count = 0;
+	int i = cmd.nameLen;
+	int j = 0;
+	bool isNewArg = false;
+
+	const char argsDelimiter = ';';
+
+	while (buffer[i] != '\0')
+	{
+		if (Utils::isSpace(buffer[i]))
+		{
+			isNewArg = true;
+			++i;
+			continue;
+		}
+
+		if (isNewArg)
+		{
+			if (count > 0)
+				cmd.args[j++] = argsDelimiter;
+			++count;
+			isNewArg = false;
+		}
+
+		cmd.args[j] = buffer[i];
+		++j;
+		++i;
+	}
+
+	//TODO: implement this in String class to avoid the '\0' C-like coding style?
+	cmd.args[j] = '\0';
+	cmd.argsCount = count;
+}
+
+bool Shell::execCmd(Shell::Cmd& currentCmd)
+{
+	if (currentCmd.name == REBOOT)
 		reboot();
 }
 
@@ -105,9 +153,12 @@ void Shell::parseBuffer()
 	if (buffer[0] == '\0')
 		return;
 
-	String cmd(buffer);
-	if (isKnownCmd(cmd))
-		execCmd(cmd);
+	Cmd currentCmd;
+	getCmdName(currentCmd);
+	getArgs(currentCmd);
+
+	if (isKnownCmd(currentCmd.name))
+		execCmd(currentCmd);
 	else
 		VgaBuffer::putstr("Unknown Command.\n");
 
