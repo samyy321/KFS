@@ -20,6 +20,12 @@ void	printSplash(void)
 	VgaBuffer::putstrColor("Flemme sur lit de pistache.", LIGHT_GREEN, RED);
 }
 
+//Need this handler because of lack of std lib
+extern "C" void __cxa_pure_virtual()
+{
+	while(1);
+}
+
 extern "C"
 void	kmain(t_multiboot *mboot_ptr)
 {
