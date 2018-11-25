@@ -9,7 +9,7 @@ SRC_PATH = src/
 
 SRC_NAME = main.cpp VgaBuffer.cpp GlobalDescriptorTable.cpp MemLib.cpp \
 			InterruptsManager.cpp KbdHandler.cpp DisplayablesManager.cpp \
-			Shell.cpp String.cpp Utils.cpp
+			Shell.cpp String.cpp Utils.cpp Print.cpp
 ASM_SRC_NAME = loader.s portIO.s interrupts.s
 
 OBJ_PATH = obj/

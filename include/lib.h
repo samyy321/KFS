@@ -10,8 +10,14 @@ namespace	MemLib
 
 namespace Utils
 {
-	bool isSimpleSpace(char c);
-	bool isSpace(char c);
+	bool	isSimpleSpace(char c);
+	bool	isSpace(char c);
+}
+
+namespace Print
+{
+	void	printHexa(uint8_t nb);
+	void	printHexa(uint32_t nb);
 }
 
 #endif
