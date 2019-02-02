@@ -7,12 +7,11 @@
 // Commands
 #define REBOOT "reboot"
 
-class	Shell : public IDisplayable
+class	Shell : public Displayable
 {
 public:
 	Shell();
 	void start();
-	void reboot();
 	virtual void addValToBuffer(char value) override;
 	void addCommand(String *cmd);
 	void printStroke(char strokeValue);

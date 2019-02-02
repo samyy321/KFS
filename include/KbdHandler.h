@@ -59,6 +59,7 @@ static const char *us_keymap[][2] = {
 
 class KbdHandler : public InterruptHandler
 {
+public:
 	class Keystroke
 	{
 	public:

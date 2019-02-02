@@ -6,7 +6,9 @@
 #define BUF_MAX				4096
 #define DISPLAYABLES_COUNT	1
 
-class IDisplayable
+// Abstract class with methods used by classes that will
+// display the result of user interactions to standard output.
+class Displayable
 {
 public:
 	virtual void addValToBuffer(char value);
@@ -24,18 +26,19 @@ public:
 	}
 };
 
+// Class to handle a the displayables as a collection.
 class DisplayablesManager
 {
 public:
 	DisplayablesManager();
 
-	void addDisplayable(IDisplayable *newDisplayable);
+	void addDisplayable(Displayable *newDisplayable);
 
 private:
 	uint32_t displayablesCount;
 
 public:
-	IDisplayable* displayables[DISPLAYABLES_COUNT];
+	Displayable* displayables[DISPLAYABLES_COUNT];
 };
 
 #endif

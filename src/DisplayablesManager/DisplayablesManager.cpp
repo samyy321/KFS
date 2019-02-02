@@ -1,7 +1,7 @@
 #include "DisplayablesManager.h"
 
 // A displayable has a buffer for storing keystrokes
-void IDisplayable::addValToBuffer(char value)
+void Displayable::addValToBuffer(char value)
 {
 	//TODO: Implement growing buffer
 	if (bufferLen == BUF_MAX - 2)
@@ -15,7 +15,7 @@ DisplayablesManager::DisplayablesManager() : displayablesCount(0)
 
 }
 
-void DisplayablesManager::addDisplayable(IDisplayable* newDisplayable)
+void DisplayablesManager::addDisplayable(Displayable* newDisplayable)
 {
 	displayables[displayablesCount] = newDisplayable;
 	displayablesCount++;

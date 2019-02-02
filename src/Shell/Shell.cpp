@@ -33,7 +33,7 @@ void Shell::reboot()
 
 void Shell::printStroke(char strokeValue)
 {
-	char* c = "\0";
+	char c[2] = {};
 
 	c[0] = strokeValue;
 	if (strokeValue == '\b')
@@ -43,7 +43,7 @@ void Shell::printStroke(char strokeValue)
 	}
 	else
 	{
-		VgaBuffer::putstr(c);
+		VgaBuffer::putstr(&(*c));
 	}
 }
 
@@ -77,7 +77,7 @@ void Shell::addCommand(String *cmd)
 {
 	for (int i = 0; i < NB_CMD; ++i)
 	{
-		if (commands[i] == 0)
+		if (commands[i] == nullptr)
 		{
 			commands[i] = cmd;
 			return;

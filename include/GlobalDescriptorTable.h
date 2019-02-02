@@ -14,10 +14,11 @@
  * Readable bit for code descriptors: Whether read access for this segment is allowed. Write access is never allowed for code segments.
  * Writable bit for data descriptors: Whether write access for this segment is allowed. Read access is always allowed for data segments.
  * bit 0: Accessed bit. Just set to 0. The CPU sets this to 1 when the segment is accessed.
+ * source: https://wiki.osdev.org/Global_Descriptor_Table
  */
 #define KERN_CODE_FLAG	0x9A // 1001 1010
 #define KERN_DATA_FLAG	0x92 // 1001 0010
-#define KERN_STACK_FLAG	0x96 // 1001 0110
+#define KERN_STACK_FLAG	0x96 // 1001 0110 We set the bit 2 to have a growing down stack segment
 #define USER_CODE_FLAG	0xFA // 1111 1010
 #define USER_DATA_FLAG	0xF2 // 1111 0010
 #define USER_STACK_FLAG	0xF6 // 1111 0110
