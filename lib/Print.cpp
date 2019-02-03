@@ -5,12 +5,12 @@ namespace Print
 {
 	void	printHexa(uint8_t nb)
 	{
-		char* hex = "0123456789ABCDEF";
-		char* res = "00";
+		const char* hex = "0123456789ABCDEF";
+		char res[3] = {};
 
 		res[0] = hex[(nb >> 4) & 0x0F];
 		res[1] = hex[nb & 0x0F];
-		VgaBuffer::putstr(&res[0]);
+		VgaBuffer::putstr(&(*res));
 	}
 
 	void	printHexa(uint32_t nb)

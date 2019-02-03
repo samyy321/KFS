@@ -74,29 +74,44 @@ namespace	VgaBuffer
 	{
 		char	c;
 
-		while ((c = *str++) != '\0') {
+		while ((c = *str++) != '\0')
+		{
 			if (VgaBuffer::currentY >= HEIGHT)
 				scroll();
-			if (c == '\b') {
+
+			switch (c)
+			{
+			case '\b':
 				BACKSPACE(VgaBuffer::currentX)
-			} else if (c == '\r') {
+				break;
+			case '\r':
 				CARRIAGE_RET(VgaBuffer::currentX)
-			} else if (c == '\n') {
+				break;
+			case '\n':
 				NEWLINE(VgaBuffer::currentX, VgaBuffer::currentY)
 				scroll();
-			} else {
-				if (VgaBuffer::currentX >= WIDTH) {
+				break;
+			default:
+				if (VgaBuffer::currentX >= WIDTH)
+				{
 					NEWLINE(VgaBuffer::currentX, VgaBuffer::currentY)
 					scroll();
-				} if (c == '\t')
+				}
+
+				if (c == '\t')
+				{
 					TAB(VgaBuffer::currentX, VgaBuffer::currentY)
-				else {
+				}
+				else
+				{
 					PUTC(c, VgaBuffer::base[CURRENT_IDX(VgaBuffer::currentX,
 														VgaBuffer::currentY)]);
 					VgaBuffer::currentX++;
 				}
+				break;
 			}
 		}
+
 		updateCursor(CURRENT_IDX(VgaBuffer::currentX, VgaBuffer::currentY));
 	}
 
