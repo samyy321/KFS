@@ -4,29 +4,33 @@
 #define MAX_CONTENT 64
 
 #include "types.h"
+#include "VgaBuffer.h"
+#include "lib.h"
 
 class String
 {
 private:
-	uint32_t size;
 	char content[MAX_CONTENT]; //TODO: handle resize after implementing memory management
+	size_t length;
 
 public:
 	String(const char *str);
 	String(const String& str);
 	String();
+	void clear();
+	void pushBack(char c);
 
 	uint32_t getSize() const
 	{
-		return size;
+		return length;
 	}
 
-	char operator[](int idx) const
+	const char& operator[](int idx) const
 	{
 		//TODO: implement assert
 		if (idx < 0 || idx >= MAX_CONTENT)
 		{
-				VgaBuffer::putstr("Out of string buffer!");
+				VgaBuffer::putstr("const char& operator[]: Out of string buffer!\n");
 				return content[0];
 		}
 		return content[idx];
@@ -38,16 +42,19 @@ public:
 		//TODO: implement assert
 		if (idx < 0 || idx >= MAX_CONTENT)
 		{
-				VgaBuffer::putstr("Out of string buffer!");
+				VgaBuffer::putstr("char& operator[]: Out of string buffer!\n");
 				return content[0];
 		}
 		return content[idx];
 	}
 
+	operator char*(){return &content[0];}
+
 	String& operator=(const char* right);
 	String& operator=(const String& right);
 	bool operator==(const String& right);
 	bool operator==(const char *right);
+	String& operator+=(char c);
 };
 
 #endif

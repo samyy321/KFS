@@ -1,14 +1,21 @@
 #include "String.h"
 #include "VgaBuffer.h"
+#include "lib.h"
 
 String::String()
+: length(0)
 {
-
+	clear();
 }
 
-String::String(const char *str)
+String::String(const String& str)
 {
-	*this = str;
+	operator=(str);
+}
+
+String::String(const char* str)
+{
+	operator=(str);
 }
 
 // TODO: handle content larger than buffer size
@@ -21,7 +28,9 @@ String& String::operator=(const char* right)
 		++i;
 	}
 	content[i] = '\0';
-	size = --i;
+	length = Utils::strlen(right);
+
+	return *this;
 }
 
 String& String::operator=(const String& right)
@@ -33,7 +42,9 @@ String& String::operator=(const String& right)
 		++i;
 	}
 	content[i] = '\0';
-	size = --i;
+	length = right.getSize();
+
+	return *this;
 }
 
 bool String::operator==(const String& right)
@@ -52,4 +63,35 @@ bool String::operator==(const char* right)
 		++i;
 
 	return ((content[i] - right[i]) == 0);
+}
+
+String& String::operator+=(char c)
+{
+	pushBack(c);
+	return *this;
+}
+
+void String::clear()
+{
+	int i = 0;
+
+	while (i < MAX_CONTENT)
+	{
+		content[i] = '\0';
+		++i;
+	}
+}
+
+void String::pushBack(char c)
+{
+	const size_t newLength = length + 1;
+	if (newLength + 1 >= MAX_CONTENT)
+	{
+		// TODO: implement resize
+		VgaBuffer::putstr("pushBack: Out of string buffer!\n");
+		return;
+	}
+	content[length] = c;
+	content[newLength] = '\0';
+	length = newLength;
 }
