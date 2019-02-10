@@ -4,7 +4,7 @@
 #include "types.h"
 
 #define BUF_MAX				4096
-#define DISPLAYABLES_COUNT	1
+#define DISPLAYABLES_MAX	1
 
 // Abstract class with methods used by classes that will
 // display the result of user interactions to standard output.
@@ -12,6 +12,7 @@ class Displayable
 {
 public:
 	virtual void addValToBuffer(char value);
+	virtual void clearBuffer();
 
 protected:
 	char		buffer[BUF_MAX];
@@ -26,7 +27,7 @@ public:
 	}
 };
 
-// Class to handle a the displayables as a collection.
+// Class to handle the displayables as a collection.
 class DisplayablesManager
 {
 public:
@@ -38,7 +39,13 @@ private:
 	uint32_t displayablesCount;
 
 public:
-	Displayable* displayables[DISPLAYABLES_COUNT];
+	// TODO: implement vector when memory management ok ?
+	Displayable* displayables[DISPLAYABLES_MAX];
+
+	uint32_t getDisplayablesCount() const
+	{
+		return displayablesCount;
+	}
 };
 
 #endif

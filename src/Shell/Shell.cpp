@@ -162,6 +162,5 @@ void Shell::parseBuffer()
 	else
 		VgaBuffer::putstr("Unknown Command.\n");
 
-	buffer[0] = '\0';
-	bufferLen = 0;
+	clearBuffer();
 }

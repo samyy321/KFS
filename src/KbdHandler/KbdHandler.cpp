@@ -67,7 +67,7 @@ uint32_t KbdHandler::execInterruptRoutine(uint32_t esp)
 {
 	Keystroke key(readPort(0x60));
 	if (!key.getState())
-		for (int i = 0; i < DISPLAYABLES_COUNT; i++)
+		for (int i = 0; i < displayablesManager->getDisplayablesCount(); i++)
 			displayablesManager->displayables[i]->addValToBuffer(key.getAsciiVal());
 	return esp;
 }
