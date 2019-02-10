@@ -34,19 +34,22 @@ void	kmain(t_multiboot *mboot_ptr)
 	VgaBuffer::enableCursor(0, 15);
 
 	GlobalDescriptorTable gdt;
-	InterruptsManager interruptsManager(&gdt);
-
-	DisplayablesManager displayablesManager;
 
 	// Shell commands
-	String reboot("reboot");
+	String reboot(REBOOT);
+	String hexdump(GODTAKE);
+	String writeToMemory(GODGIVE);
 
 	Shell basicShell;
 	basicShell.addCommand(&reboot);
+	basicShell.addCommand(&hexdump);
+	basicShell.addCommand(&writeToMemory);
 
+	DisplayablesManager displayablesManager;
 	displayablesManager.addDisplayable(&basicShell);
-	KbdHandler kbd(&interruptsManager, &displayablesManager);
 
+	InterruptsManager interruptsManager(&gdt);
+	KbdHandler kbd(&interruptsManager, &displayablesManager);
 	interruptsManager.initIdt();
 
 	basicShell.start();
