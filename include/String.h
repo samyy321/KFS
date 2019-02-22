@@ -19,6 +19,7 @@ public:
 	String();
 	void clear();
 	void pushBack(char c);
+	void pushBack(const String& str);
 
 	uint32_t getSize() const
 	{
@@ -55,6 +56,7 @@ public:
 	bool operator==(const String& right);
 	bool operator==(const char *right);
 	String& operator+=(char c);
+	String& operator+=(const String& right);
 };
 
 #endif

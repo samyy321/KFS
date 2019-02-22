@@ -71,15 +71,10 @@ String& String::operator+=(char c)
 	return *this;
 }
 
-void String::clear()
+String& String::operator+=(const String& right)
 {
-	int i = 0;
-
-	while (i < MAX_CONTENT)
-	{
-		content[i] = '\0';
-		++i;
-	}
+	pushBack(right);
+	return *this;
 }
 
 void String::pushBack(char c)
@@ -94,4 +89,30 @@ void String::pushBack(char c)
 	content[length] = c;
 	content[newLength] = '\0';
 	length = newLength;
+}
+
+void String::pushBack(const String& str)
+{
+	const size_t newLength = length + str.getSize();
+	if (newLength + 1 >= MAX_CONTENT)
+	{
+		// TODO: implement resize
+		VgaBuffer::putstr("pushBack: Out of string buffer!\n");
+		return;
+	}
+	for (int i = length; str[i]; ++i)
+		content[i] = str[i];
+	content[newLength] = '\0';
+	length = newLength;
+}
+
+void String::clear()
+{
+	int i = 0;
+
+	while (i < MAX_CONTENT)
+	{
+		content[i] = '\0';
+		++i;
+	}
 }
