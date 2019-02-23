@@ -100,8 +100,10 @@ void String::pushBack(const String& str)
 		VgaBuffer::putstr("pushBack: Out of string buffer!\n");
 		return;
 	}
-	for (int i = length; str[i]; ++i)
-		content[i] = str[i];
+
+	for (int i = length, j = 0; str[j]; ++i, ++j)
+		content[i] = str[j];
+
 	content[newLength] = '\0';
 	length = newLength;
 }
