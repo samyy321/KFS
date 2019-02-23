@@ -5,6 +5,10 @@
 #include "KbdHandler.h"
 #include "Shell.h"
 #include "DisplayablesManager.h"
+#include "CommandsManager.h"
+#include "RebootCmd.h"
+#include "GodGiveCmd.h"
+#include "GodTakeCmd.h"
 
 void	printSplash(void)
 {
@@ -36,14 +40,16 @@ void	kmain(t_multiboot *mboot_ptr)
 	GlobalDescriptorTable gdt;
 
 	// Shell commands
-	String reboot(REBOOT);
-	String hexdump(GODTAKE);
-	String writeToMemory(GODGIVE);
+	RebootCmd rebootCmd;
+	GodGiveCmd godGiveCmd;
+	GodTakeCmd godTakeCmd;
 
-	Shell basicShell;
-	basicShell.addCommand(&reboot);
-	basicShell.addCommand(&hexdump);
-	basicShell.addCommand(&writeToMemory);
+	CommandsManager cmdManager;
+	cmdManager.addCommand(&rebootCmd);
+	cmdManager.addCommand(&godGiveCmd);
+	cmdManager.addCommand(&godTakeCmd);
+
+	Shell basicShell(&cmdManager);
 
 	DisplayablesManager displayablesManager;
 	displayablesManager.addDisplayable(&basicShell);

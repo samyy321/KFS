@@ -3,6 +3,7 @@ CXXFLAGS = -m32 -fno-builtin -fno-exceptions -fno-stack-protector -fno-rtti \
 			-nostdlib -nodefaultlibs -fno-leading-underscore -std=c++11
 SRC_NAME = Shell.cpp
 INCLUDE_PATH = ../../include
+COMMANDS_INCLUDE_PATH = ../../include/Commands
 OBJ_PATH = obj/
 KOBJ_PATH = ../../obj
 
@@ -13,7 +14,7 @@ all: $(OBJ)
 
 $(OBJ_PATH)%.o: $(SRC_PATH)%.cpp
 	@mkdir -p $(OBJ_PATH)
-	@$(CXX) $(CXXFLAGS) -I $(INCLUDE_PATH) -c $^ -o $@
+	@$(CXX) $(CXXFLAGS) -I $(INCLUDE_PATH) -I $(COMMANDS_INCLUDE_PATH) -c $^ -o $@
 
 install: $(OBJ)
 	@echo "Install DisplayablesManager objects..."

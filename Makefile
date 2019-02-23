@@ -9,8 +9,12 @@ SRC_PATH = src/
 
 SRC_NAME = main.cpp VgaBuffer.cpp GlobalDescriptorTable.cpp MemLib.cpp \
 			InterruptsManager.cpp KbdHandler.cpp DisplayablesManager.cpp \
-			Shell.cpp String.cpp Utils.cpp Print.cpp
+			Shell.cpp String.cpp Utils.cpp Print.cpp CommandsManager.cpp \
+			GodGiveCmd.cpp GodTakeCmd.cpp RebootCmd.cpp
 ASM_SRC_NAME = loader.s portIO.s interrupts.s
+
+INCLUDE_PATH = include
+COMMANDS_INCLUDE_PATH = include/Commands
 
 OBJ_PATH = obj/
 
@@ -40,7 +44,8 @@ $(OBJ_PATH)%.o: $(SRC_PATH)%.cpp
 	@make -C $(SRC_PATH)/KbdHandler install
 	@make -C $(SRC_PATH)/DisplayablesManager install
 	@make -C $(SRC_PATH)/Shell install
-	@$(CXX) $(CXXFLAGS) -I include -c $^ -o $@
+	@make -C $(SRC_PATH)/Commands install
+	@$(CXX) $(CXXFLAGS) -I $(INCLUDE_PATH) -I $(COMMANDS_INCLUDE_PATH) -c $^ -o $@
 
 $(OBJ_PATH)%.o: $(SRC_PATH)%.s
 	@$(ASM) $(ASM_FLAGS) $^ -o $@
@@ -65,6 +70,7 @@ clean:
 	@make -C $(SRC_PATH)/KbdHandler clean
 	@make -C $(SRC_PATH)/DisplayablesManager clean
 	@make -C $(SRC_PATH)/Shell clean
+	@make -C $(SRC_PATH)/Commands clean
 	@echo "Objects removed."
 
 fclean: clean
