@@ -23,7 +23,7 @@ void Shell::printStroke(char strokeValue)
 	c[0] = strokeValue;
 	if (strokeValue == '\b')
 	{
-		if (bufferLen)
+		if (m_bufferLen)
 			VgaBuffer::eraseChar(sizeof(PROMPT) - 1);
 	}
 	else
@@ -45,18 +45,18 @@ void Shell::addValToBuffer(char value)
 		return;
 	}
 
-	if (bufferLen == BUF_MAX - 2)
-		bufferLen = 0;
+	if (m_bufferLen == BUF_MAX - 2)
+		m_bufferLen = 0;
 	if (value == '\b')
 	{
-		if (bufferLen == 0)
+		if (m_bufferLen == 0)
 			return;
-		buffer[--bufferLen] = '\0';
+		m_buffer[--m_bufferLen] = '\0';
 	}
 	else
 	{
-		buffer[bufferLen] = value;
-		buffer[++bufferLen] = '\0';
+		m_buffer[m_bufferLen] = value;
+		m_buffer[++m_bufferLen] = '\0';
 	}
 }
 
@@ -64,8 +64,8 @@ String	Shell::parseCmdName()
 {
 	String cmdName = "";
 
-	for (uint8_t i = 0; buffer[i] != '\0' && !Utils::isSpace(buffer[i]); ++i)
-		cmdName += buffer[i];
+	for (uint8_t i = 0; m_buffer[i] != '\0' && !Utils::isSpace(m_buffer[i]); ++i)
+		cmdName += m_buffer[i];
 
 	return cmdName;
 }
@@ -75,16 +75,16 @@ void Shell::setArgsToCmd(Command& cmd)
 	cmd.clearArgs();
 	String currentArg;
 
-	for (int i = cmd.getName().getSize() + 1; buffer[i]; ++i)
+	for (int i = cmd.getName().getSize() + 1; m_buffer[i]; ++i)
 	{
-		if (Utils::isSpace(buffer[i]))
+		if (Utils::isSpace(m_buffer[i]))
 		{
 			cmd.addArg(currentArg);
 			currentArg = "";
 		}
 		else
 		{
-			currentArg += buffer[i];
+			currentArg += m_buffer[i];
 		}
 	}
 	cmd.addArg(currentArg);
@@ -92,7 +92,7 @@ void Shell::setArgsToCmd(Command& cmd)
 
 void Shell::parseBuffer()
 {
-	if (buffer[0] == '\0')
+	if (m_buffer[0] == '\0')
 		return;
 
 	Command* currentCmd = m_cmdManager->getCommand(parseCmdName());

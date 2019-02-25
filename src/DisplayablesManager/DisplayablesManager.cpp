@@ -4,10 +4,10 @@
 void Displayable::addValToBuffer(char value)
 {
 	//TODO: Implement growing buffer
-	if (bufferLen == BUF_MAX - 2)
-		bufferLen = 0;
-	buffer[bufferLen] = value;
-	buffer[++bufferLen] = '\0';
+	if (m_bufferLen == BUF_MAX - 2)
+		m_bufferLen = 0;
+	m_buffer[m_bufferLen] = value;
+	m_buffer[++m_bufferLen] = '\0';
 }
 
 void Displayable::clearBuffer()
@@ -15,17 +15,17 @@ void Displayable::clearBuffer()
 	int i = 0;
 
 	for (int i = 0; i < BUF_MAX; ++i)
-		buffer[i] = '\0';
-	bufferLen = 0;
+		m_buffer[i] = '\0';
+	m_bufferLen = 0;
 }
 
-DisplayablesManager::DisplayablesManager() : displayablesCount(0)
+DisplayablesManager::DisplayablesManager() : m_displayablesCount(0)
 {
 
 }
 
 void DisplayablesManager::addDisplayable(Displayable* newDisplayable)
 {
-	displayables[displayablesCount] = newDisplayable;
-	displayablesCount++;
+	m_displayables[m_displayablesCount] = newDisplayable;
+	m_displayablesCount++;
 }

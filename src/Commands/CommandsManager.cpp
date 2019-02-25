@@ -1,48 +1,48 @@
 #include "CommandsManager.h"
 
-CommandsManager::CommandsManager() : cmdCount(0)
+CommandsManager::CommandsManager() : m_cmdCount(0)
 {
-	for (int i = 0; i < CommandsManager::cmdMax; ++i)
-		commands[i] = nullptr;
+	for (int i = 0; i < CommandsManager::m_cmdMax; ++i)
+		m_commands[i] = nullptr;
 }
 
 void CommandsManager::addCommand(Command *cmd)
 {
-	if (cmdCount == CommandsManager::cmdMax)
+	if (m_cmdCount == CommandsManager::m_cmdMax)
 	{
 		VgaBuffer::putstr("CommandsManager::cmdMax is too low.");
 		return;
 	}
-	commands[cmdCount] = cmd;
-	cmdCount++;
+	m_commands[m_cmdCount] = cmd;
+	m_cmdCount++;
 }
 
 Command* CommandsManager::getCommand(const String& cmdName) const
 {
-	for (int i = 0; i < cmdCount; ++i)
+	for (int i = 0; i < m_cmdCount; ++i)
 	{
-		if (commands[i]->getName() == cmdName)
-			return commands[i];
+		if (m_commands[i]->getName() == cmdName)
+			return m_commands[i];
 	}
 	return nullptr;
 }
 
-Command::Command(String&& cmdName) : name(cmdName), argsCount(0)
+Command::Command(String&& cmdName) : m_name(cmdName), m_argsCount(0)
 {
 
 }
 
 void Command::addArg(const String& arg)
 {
-	args += arg;
-	args += argsDelimiter;
-	argsCount++;
+	m_args += arg;
+	m_args += m_argsDelimiter;
+	m_argsCount++;
 }
 
 void Command::clearArgs()
 {
-	args = "";
-	argsCount = 0;
+	m_args = "";
+	m_argsCount = 0;
 }
 
 String Command::getArg(uint8_t argNb)
@@ -50,15 +50,15 @@ String Command::getArg(uint8_t argNb)
 	String arg;
 	int i = 0;
 
-	if (argsCount == 0)
+	if (m_argsCount == 0)
 		return arg;
 
-	while (argNb >= 0 && args[i])
+	while (argNb >= 0 && m_args[i])
 	{
-		if (args[i] == ';')
+		if (m_args[i] == ';')
 			argNb--;
 		else if (argNb == 0)
-			arg += args[i];
+			arg += m_args[i];
 		++i;
 	}
 	return arg;

@@ -3,7 +3,7 @@
 #include "lib.h"
 
 String::String()
-: length(0)
+: m_length(0)
 {
 	clear();
 }
@@ -18,17 +18,17 @@ String::String(const char* str)
 	operator=(str);
 }
 
-// TODO: handle content larger than buffer size
+// TODO: handle m_content larger than buffer size
 String& String::operator=(const char* right)
 {
 	int i = 0;
 	while (right[i] != '\0' && i < MAX_CONTENT - 1)
 	{
-		content[i] = right[i];
+		m_content[i] = right[i];
 		++i;
 	}
-	content[i] = '\0';
-	length = Utils::strlen(right);
+	m_content[i] = '\0';
+	m_length = Utils::strlen(right);
 
 	return *this;
 }
@@ -38,11 +38,11 @@ String& String::operator=(const String& right)
 	int i = 0;
 	while (right[i] != '\0' && i < MAX_CONTENT - 1)
 	{
-		content[i] = right[i];
+		m_content[i] = right[i];
 		++i;
 	}
-	content[i] = '\0';
-	length = right.getSize();
+	m_content[i] = '\0';
+	m_length = right.getSize();
 
 	return *this;
 }
@@ -50,19 +50,19 @@ String& String::operator=(const String& right)
 bool String::operator==(const String& right)
 {
 	int i = 0;
-	while (content[i] && content[i] == right[i])
+	while (m_content[i] && m_content[i] == right[i])
 		++i;
 
-	return ((content[i] - right[i]) == 0);
+	return ((m_content[i] - right[i]) == 0);
 }
 
 bool String::operator==(const char* right)
 {
 	int i = 0;
-	while (content[i] && content[i] == right[i])
+	while (m_content[i] && m_content[i] == right[i])
 		++i;
 
-	return ((content[i] - right[i]) == 0);
+	return ((m_content[i] - right[i]) == 0);
 }
 
 String& String::operator+=(char c)
@@ -79,21 +79,21 @@ String& String::operator+=(const String& right)
 
 void String::pushBack(char c)
 {
-	const size_t newLength = length + 1;
+	const size_t newLength = m_length + 1;
 	if (newLength + 1 >= MAX_CONTENT)
 	{
 		// TODO: implement resize
 		VgaBuffer::putstr("pushBack: Out of string buffer!\n");
 		return;
 	}
-	content[length] = c;
-	content[newLength] = '\0';
-	length = newLength;
+	m_content[m_length] = c;
+	m_content[newLength] = '\0';
+	m_length = newLength;
 }
 
 void String::pushBack(const String& str)
 {
-	const size_t newLength = length + str.getSize();
+	const size_t newLength = m_length + str.getSize();
 	if (newLength + 1 >= MAX_CONTENT)
 	{
 		// TODO: implement resize
@@ -101,11 +101,11 @@ void String::pushBack(const String& str)
 		return;
 	}
 
-	for (int i = length, j = 0; str[j]; ++i, ++j)
-		content[i] = str[j];
+	for (int i = m_length, j = 0; str[j]; ++i, ++j)
+		m_content[i] = str[j];
 
-	content[newLength] = '\0';
-	length = newLength;
+	m_content[newLength] = '\0';
+	m_length = newLength;
 }
 
 void String::clear()
@@ -114,7 +114,7 @@ void String::clear()
 
 	while (i < MAX_CONTENT)
 	{
-		content[i] = '\0';
+		m_content[i] = '\0';
 		++i;
 	}
 }

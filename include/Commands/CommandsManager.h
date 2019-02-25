@@ -9,12 +9,12 @@ protected:
 	Command(String&& cmdName);
 
 private:
-	String name;
-	String args;
-	uint16_t nameLen;
-	uint8_t argsCount;
+	String m_name;
+	String m_args;
+	uint16_t m_nameLen;
+	uint8_t m_argsCount;
 
-	const char argsDelimiter = ';';
+	const char m_argsDelimiter = ';';
 
 public:
 	String getArg(uint8_t argNb);
@@ -24,7 +24,7 @@ public:
 
 	String getName() const
 	{
-		return name;
+		return m_name;
 	}
 };
 
@@ -35,9 +35,9 @@ public:
 	CommandsManager();
 
 private:
-	static const uint8_t cmdMax = 5;
-	uint8_t cmdCount;
-	Command* commands[cmdMax];
+	static const uint8_t m_cmdMax = 5;
+	uint8_t m_cmdCount;
+	Command* m_commands[m_cmdMax];
 
 public:
 	void addCommand(Command* cmd);

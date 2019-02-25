@@ -10,8 +10,8 @@
 class String
 {
 private:
-	char content[MAX_CONTENT]; //TODO: handle resize after implementing memory management
-	size_t length;
+	char m_content[MAX_CONTENT]; //TODO: handle resize after implementing memory management
+	size_t m_length;
 
 public:
 	String(const char *str);
@@ -23,7 +23,7 @@ public:
 
 	uint32_t getSize() const
 	{
-		return length;
+		return m_length;
 	}
 
 	const char& operator[](int idx) const
@@ -32,9 +32,9 @@ public:
 		if (idx < 0 || idx >= MAX_CONTENT)
 		{
 				VgaBuffer::putstr("const char& operator[]: Out of string buffer!\n");
-				return content[0];
+				return m_content[0];
 		}
-		return content[idx];
+		return m_content[idx];
 	}
 
 	// This overload is used for assignement
@@ -44,12 +44,12 @@ public:
 		if (idx < 0 || idx >= MAX_CONTENT)
 		{
 				VgaBuffer::putstr("char& operator[]: Out of string buffer!\n");
-				return content[0];
+				return m_content[0];
 		}
-		return content[idx];
+		return m_content[idx];
 	}
 
-	operator char*(){return &content[0];}
+	operator char*(){return &m_content[0];}
 
 	String& operator=(const char* right);
 	String& operator=(const String& right);

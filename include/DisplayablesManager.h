@@ -16,15 +16,15 @@ public:
 	virtual void clearBuffer();
 
 protected:
-	char		buffer[BUF_MAX];
-	uint16_t	bufferLen;
+	char		m_buffer[BUF_MAX];
+	uint16_t	m_bufferLen;
 
 	virtual void parseBuffer() = 0;
 
 public:
 	uint16_t getBufferLen()
 	{
-		return bufferLen;
+		return m_bufferLen;
 	}
 };
 
@@ -37,16 +37,16 @@ public:
 	void addDisplayable(Displayable *newDisplayable);
 
 private:
-	uint32_t displayablesCount;
-	static const uint8_t displayablesMax = 1;
+	uint32_t m_displayablesCount;
+	static const uint8_t m_displayablesMax = 1;
 
 public:
 	// TODO: implement vector when memory management ok ?
-	Displayable* displayables[displayablesMax];
+	Displayable* m_displayables[m_displayablesMax];
 
 	uint32_t getDisplayablesCount() const
 	{
-		return displayablesCount;
+		return m_displayablesCount;
 	}
 };
 
