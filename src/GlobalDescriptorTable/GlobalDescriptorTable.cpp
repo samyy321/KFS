@@ -20,6 +20,9 @@ UserDataSegment(0, 0xFFFFFFFF, USER_DATA_FLAG, PAGE_BLOCK)
 	gdtPtr.base = GDT_BASE;
 	MemLib::memcpy((char *)gdtPtr.base, (char*)this, gdtPtr.size);
 
+	// Grub seems to set the data segment base at 0:
+	// https://github.com/coreos/grub/blob/2.02-coreos/grub-core/kern/i386/realmode.S
+	// So when we set our GDT the stack pointer is not lost.
 	asm("lgdt %0" : : "m" (gdtPtr));
 	asm("movw $0x10, %ax;"
 				"movw %ax, %ds;"

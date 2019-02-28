@@ -37,6 +37,9 @@ void	kmain(t_multiboot *mboot_ptr)
 	printSplash();
 	VgaBuffer::enableCursor(0, 15);
 
+	// Grub sets its own GDT in memory and since we don't know where
+	// we risk to overwrite and cause triple fault.
+	// So we set ours.
 	GlobalDescriptorTable gdt;
 
 	// Shell commands
